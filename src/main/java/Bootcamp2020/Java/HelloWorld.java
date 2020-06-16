@@ -15,9 +15,9 @@ public class HelloWorld {
             case 2:
                 return "H3770 W0r7d";
             default:
-                break;
+                return "Hello world.";
         }
-        return "Hello world.";
+
     }
 
     public static void random(){
