@@ -6,4 +6,4 @@
     - Hello World Message randomizen | import java.util.Random
     - Hello World über Konsoleneingabe | import java.util.Scanner
     - Beim Start der App entscheiden, welche Methode ausgeführt wird
-- Hello World in eigene Klasse verschieben und Instanz in main erstellen
+	- Hello World in eigene Klasse verschieben und Instanz in main erstellen
