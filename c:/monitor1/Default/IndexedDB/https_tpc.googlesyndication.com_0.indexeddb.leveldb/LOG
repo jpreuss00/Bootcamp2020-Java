@@ -1,0 +1,8 @@
+2020/06/16-15:29:55.683 1876f Reusing MANIFEST /Users/jpreuss/Desktop/AS Ideas Engineering/Bootcamp2020-Java/c:/monitor1/Default/IndexedDB/https_tpc.googlesyndication.com_0.indexeddb.leveldb/MANIFEST-000001
+2020/06/16-15:29:55.684 1876f Recovering log #10
+2020/06/16-15:29:55.684 1876f Reusing old log /Users/jpreuss/Desktop/AS Ideas Engineering/Bootcamp2020-Java/c:/monitor1/Default/IndexedDB/https_tpc.googlesyndication.com_0.indexeddb.leveldb/000010.log 
+2020/06/16-15:29:58.236 160cb Level-0 table #14: started
+2020/06/16-15:29:58.237 160cb Level-0 table #14: 0 bytes OK
+2020/06/16-15:29:58.252 160cb Delete type=0 #10
+2020/06/16-15:29:58.254 160cb Manual compaction at level-0 from (begin) .. (end); will stop at (end)
+2020/06/16-15:29:58.254 160cb Manual compaction at level-1 from (begin) .. (end); will stop at (end)

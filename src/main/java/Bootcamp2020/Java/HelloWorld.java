@@ -1,4 +1,4 @@
-package main.java.Bootcamp2020.Java;
+package Bootcamp2020.Java;
 
 import java.util.Random;
 import java.util.Scanner;
