@@ -8,3 +8,6 @@
     - Hello World über Konsoleneingabe | import java.util.Scanner
     - Beim Start der App entscheiden, welche Methode ausgeführt wird
 	- Hello World in eigene Klasse verschieben und Instanz in main erstellen
+	- Tests erstellen für alle Testfälle (7) -> Test-Driven Development
+	- RockPaperScissors Klasse erstellen
+	- Methode erstellen, die die Ergebnisse von beiden überprüft
