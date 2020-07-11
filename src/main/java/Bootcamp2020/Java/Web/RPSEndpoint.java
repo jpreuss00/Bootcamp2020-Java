@@ -1,5 +1,6 @@
 package Bootcamp2020.Java.Web;
 
+import Bootcamp2020.Java.Database.InsertInDB;
 import Bootcamp2020.Java.RockPaperScissors;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
@@ -11,12 +12,14 @@ import org.json.JSONObject;
 
 public class RPSEndpoint extends AbstractHandler {
 
-    private CorsHandler corsHandler;
     private RockPaperScissors rockPaperScissors;
+    private InsertInDB insertInDB;
+    private CorsHandler corsHandler;
 
-    public RPSEndpoint(RockPaperScissors rockPaperScissors, CorsHandler corsHandler){
-        this.corsHandler = corsHandler;
+    public RPSEndpoint(RockPaperScissors rockPaperScissors, InsertInDB insertInDB, CorsHandler corsHandler){
+        this.insertInDB = insertInDB;
         this.rockPaperScissors = rockPaperScissors;
+        this.corsHandler = corsHandler;
     }
 
     @Override
@@ -25,21 +28,41 @@ public class RPSEndpoint extends AbstractHandler {
 
         String decisionPlayer1 = null;
         String decisionPlayer2 = null;
+        String winner = null;
+        String decision = null;
+        int gameID = 0;
+        int playerID = 0;
 
         if (request.getParameter("decisionPlayer1") != null) {
             decisionPlayer1 = request.getParameter("decisionPlayer1");
         }
-        if (request.getParameter("decisionPlayer2") != null) {
-            decisionPlayer2 = request.getParameter("decisionPlayer2");
+        if (request.getParameter("decision") != null) {
+            decision = request.getParameter("decision");
+        }
+        if (request.getParameter("gameID") != null) {
+            gameID = Integer.parseInt(request.getParameter("gameID"));
+        }
+        if (request.getParameter("playerID") != null) {
+            playerID = Integer.parseInt(request.getParameter("playerID"));
         }
 
-        if(decisionPlayer1 != null && decisionPlayer2 != null){
-            String winner = rockPaperScissors.compareDecisions(decisionPlayer1, decisionPlayer2);
-            JSONObject json = new JSONObject().put("Winner", winner);
-            response.getWriter().print(json);
+        if(decision != null && gameID != 0 && playerID != 0){
+            insertInDB.insertDecisionInDB(gameID, decision, playerID);
+            if(insertInDB.checkForDecisionAmount(gameID)){
+                String[] decisions = insertInDB.getDecisions(gameID);
+                decisionPlayer1 = decisions[0];
+                decisionPlayer2 = decisions[1];
+                winner = rockPaperScissors.compareDecisions(decisionPlayer1, decisionPlayer2);
+            }
+        } else if (decisionPlayer1 != null) {
+            winner = rockPaperScissors.compareDecisions(decisionPlayer1, rockPaperScissors.randomAnswer());
         } else {
             return;
         }
+
+        JSONObject json = new JSONObject().put("Winner", winner);
+        response.getWriter().print(json);
+
         baseRequest.setHandled(true);
     }
 

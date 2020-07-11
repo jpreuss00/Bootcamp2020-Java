@@ -1,5 +1,6 @@
 package Bootcamp2020.Java.Web;
 
+import Bootcamp2020.Java.Database.InsertInDB;
 import Bootcamp2020.Java.RockPaperScissors;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
@@ -7,11 +8,13 @@ import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 
 public class Webserver {
 
-    private final CorsHandler corsHandler;
     private final RockPaperScissors rockPaperScissors;
+    private final InsertInDB insertInDB;
+    private final CorsHandler corsHandler;
 
-    public Webserver(RockPaperScissors rockPaperScissors, CorsHandler corsHandler) {
+    public Webserver(RockPaperScissors rockPaperScissors, InsertInDB insertInDB, CorsHandler corsHandler) {
         this.rockPaperScissors = rockPaperScissors;
+        this.insertInDB = insertInDB;
         this.corsHandler = corsHandler;
     }
 
@@ -21,7 +24,7 @@ public class Webserver {
 
         rps.setAllowNullPathInfo(true);
 
-        rps.setHandler(new RPSEndpoint(rockPaperScissors, corsHandler));
+        rps.setHandler(new RPSEndpoint(rockPaperScissors, insertInDB, corsHandler));
 
         ContextHandlerCollection contexts = new ContextHandlerCollection(rps);
 

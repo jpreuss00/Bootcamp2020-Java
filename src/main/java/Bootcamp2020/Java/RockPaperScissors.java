@@ -1,5 +1,7 @@
 package Bootcamp2020.Java;
 
+import java.util.Random;
+
 public class RockPaperScissors {
 
     public String compareDecisions(String decisionPlayer1, String decisionPlayer2){
@@ -30,5 +32,13 @@ public class RockPaperScissors {
             default:
                 return "Unentschieden";
         }
+    }
+
+    public String randomAnswer(){
+        Random random = new Random();
+
+        String[] answers = new String[]{"Schere", "Stein", "Papier"};
+
+        return answers[random.nextInt(3)];
     }
 }

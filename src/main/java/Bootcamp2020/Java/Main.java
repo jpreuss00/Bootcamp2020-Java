@@ -3,12 +3,43 @@
  */
 package Bootcamp2020.Java;
 
+import Bootcamp2020.Java.Database.ConnectToDB;
+import Bootcamp2020.Java.Database.InsertInDB;
 import Bootcamp2020.Java.Web.CorsHandler;
 import Bootcamp2020.Java.Web.Webserver;
+
+import java.sql.Connection;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
+
+        String database_url = System.getenv("DATABASE_URL");
+        String host = "";
+        String user = "";
+        String password = "";
+        String database = "";
+
+        if (database_url != null && !database_url.isEmpty()) {
+            host = database_url.substring(91, 132);
+            user = database_url.substring(11, 25);
+            password = database_url.substring(26, 90);
+            database = database_url.substring(138, 152);
+        } else {
+            host = System.getenv("DBHOST");
+            user = System.getenv("DBUSER");
+            password = System.getenv("DBPWD");
+            database = System.getenv("DB");
+        }
+
+        if (host == null || host.isEmpty() || user == null || user.isEmpty() || password == null || password.isEmpty() || database == null || database.isEmpty()) {
+            System.exit(1);
+        }
+
+        ConnectToDB connectToDB = new ConnectToDB(host, user, password, database);
+        Connection connection = connectToDB.connect();
+
+        InsertInDB insertInDB = new InsertInDB(connection);
 
         HelloWorld helloWorld = new HelloWorld();
 
@@ -18,6 +49,6 @@ public class Main {
 
         RockPaperScissors rockPaperScissors = new RockPaperScissors();
 
-        new Webserver(rockPaperScissors, corsHandler).startJetty();
+        new Webserver(rockPaperScissors, insertInDB, corsHandler).startJetty();
     }
 }
