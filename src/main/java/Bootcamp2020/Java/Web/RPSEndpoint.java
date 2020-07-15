@@ -62,6 +62,9 @@ public class RPSEndpoint extends AbstractHandler {
                 decisionPlayer1 = decisions[0];
                 decisionPlayer2 = decisions[1];
                 winner = rockPaperScissors.compareDecisions(decisionPlayer1, decisionPlayer2);
+                response.setStatus(200);
+            } else {
+                response.setStatus(400);
             }
         }
 
