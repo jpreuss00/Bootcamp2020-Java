@@ -67,7 +67,7 @@ public class InsertInDB {
                     return false;
                 }
             }
-            return true;
+            return false;
         } catch (Exception e){
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);

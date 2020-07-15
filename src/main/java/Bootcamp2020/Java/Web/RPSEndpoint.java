@@ -27,11 +27,12 @@ public class RPSEndpoint extends AbstractHandler {
         corsHandler.handleCors(request, response);
 
         String decisionPlayer1 = null;
-        String decisionPlayer2 = null;
+        String decisionPlayer2;
         String winner = null;
         String decision = null;
         int gameID = 0;
         int playerID = 0;
+        int requestCheck = 0;
 
         if (request.getParameter("decisionPlayer1") != null) {
             decisionPlayer1 = request.getParameter("decisionPlayer1");
@@ -45,19 +46,23 @@ public class RPSEndpoint extends AbstractHandler {
         if (request.getParameter("playerID") != null) {
             playerID = Integer.parseInt(request.getParameter("playerID"));
         }
+        if (request.getParameter("requestCheck") != null) {
+            requestCheck = Integer.parseInt(request.getParameter("requestCheck"));
+        }
 
         if(decision != null && gameID != 0 && playerID != 0){
             insertInDB.insertDecisionInDB(gameID, decision, playerID);
+        } else if (decisionPlayer1 != null) {
+            winner = rockPaperScissors.compareDecisions(decisionPlayer1, rockPaperScissors.randomAnswer());
+        }
+
+        if(requestCheck != 0){
             if(insertInDB.checkForDecisionAmount(gameID)){
                 String[] decisions = insertInDB.getDecisions(gameID);
                 decisionPlayer1 = decisions[0];
                 decisionPlayer2 = decisions[1];
                 winner = rockPaperScissors.compareDecisions(decisionPlayer1, decisionPlayer2);
             }
-        } else if (decisionPlayer1 != null) {
-            winner = rockPaperScissors.compareDecisions(decisionPlayer1, rockPaperScissors.randomAnswer());
-        } else {
-            return;
         }
 
         JSONObject json = new JSONObject().put("Winner", winner);
@@ -65,5 +70,4 @@ public class RPSEndpoint extends AbstractHandler {
 
         baseRequest.setHandled(true);
     }
-
 }
