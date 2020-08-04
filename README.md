@@ -11,3 +11,5 @@
 	- Tests erstellen für alle Testfälle (7) -> Test-Driven Development
 	- RockPaperScissors Klasse erstellen
 	- Methode erstellen, die die Ergebnisse von beiden überprüft
+
+    - https://vast-wildwood-04775.herokuapp.com/rps/?decisionPlayer1=Papier

@@ -27,7 +27,7 @@ public class RPSEndpoint extends AbstractHandler {
         corsHandler.handleCors(request, response);
 
         String decisionPlayer1 = null;
-        String decisionPlayer2;
+        String decisionPlayer2 = null;
         String winner = null;
         String decision = null;
         int gameID = 0;
@@ -53,7 +53,8 @@ public class RPSEndpoint extends AbstractHandler {
         if(decision != null && gameID != 0 && playerID != 0){
             insertInDB.insertDecisionInDB(gameID, decision, playerID);
         } else if (decisionPlayer1 != null) {
-            winner = rockPaperScissors.compareDecisions(decisionPlayer1, rockPaperScissors.randomAnswer());
+            decisionPlayer2 = rockPaperScissors.randomAnswer();
+            winner = rockPaperScissors.compareDecisions(decisionPlayer1, decisionPlayer2);
         }
 
         if(requestCheck != 0){
@@ -62,6 +63,7 @@ public class RPSEndpoint extends AbstractHandler {
                 decisionPlayer1 = decisions[0];
                 decisionPlayer2 = decisions[1];
                 winner = rockPaperScissors.compareDecisions(decisionPlayer1, decisionPlayer2);
+                insertInDB.deleteGame(gameID);
                 response.setStatus(200);
             } else {
                 response.setStatus(400);
@@ -69,6 +71,10 @@ public class RPSEndpoint extends AbstractHandler {
         }
 
         JSONObject json = new JSONObject().put("Winner", winner);
+        JSONObject decisions = new JSONObject();
+        decisions.put("Spieler 1", decisionPlayer1);
+        decisions.put("Spieler 2", decisionPlayer2);
+        json.append("Entscheidungen", decisions);
         response.getWriter().print(json);
 
         baseRequest.setHandled(true);

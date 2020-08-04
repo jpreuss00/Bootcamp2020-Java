@@ -21,16 +21,18 @@ public class Main {
         String database = "";
 
         if (database_url != null && !database_url.isEmpty()) {
-            host = database_url.substring(91, 132);
+            host = database_url.substring(91, 131);
             user = database_url.substring(11, 25);
             password = database_url.substring(26, 90);
-            database = database_url.substring(138, 152);
+            database = database_url.substring(137, 151);
         } else {
             host = System.getenv("DBHOST");
             user = System.getenv("DBUSER");
             password = System.getenv("DBPWD");
             database = System.getenv("DB");
         }
+
+        // System.out.println("Host: " + host + ", User: " +  user + ", Password: " + password + ", Database: " + database);
 
         if (host == null || host.isEmpty() || user == null || user.isEmpty() || password == null || password.isEmpty() || database == null || database.isEmpty()) {
             System.exit(1);
@@ -43,7 +45,7 @@ public class Main {
 
         HelloWorld helloWorld = new HelloWorld();
 
-        helloWorld.hw();
+        // helloWorld.hw();
 
         CorsHandler corsHandler = new CorsHandler();
 

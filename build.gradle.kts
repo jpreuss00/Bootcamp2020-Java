@@ -27,6 +27,8 @@ dependencies {
     // Use JUnit test framework
     testImplementation("junit:junit:4.12")
 
+    // jetty & json
+    implementation("org.postgresql:postgresql:42.2.14")
     implementation("org.json:json:20200518")
     implementation("org.eclipse.jetty:jetty-util-ajax:9.4.30.v20200611")
     implementation("org.eclipse.jetty:jetty-server:9.4.30.v20200611")
@@ -35,4 +37,17 @@ dependencies {
 application {
     // Define the main class for the application.
     mainClassName = "Bootcamp2020.Java.App"
+}
+
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "Bootcamp2020.Java.Main"
+    }
+
+    from(sourceSets.main.get().output)
+    dependsOn(configurations.runtimeClasspath)
+    from({
+        configurations.runtimeClasspath.get().filter {
+            it.name.endsWith("jar") }.map { zipTree(it) }
+    })
 }

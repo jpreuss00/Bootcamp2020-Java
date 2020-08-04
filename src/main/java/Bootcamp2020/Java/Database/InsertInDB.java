@@ -74,4 +74,15 @@ public class InsertInDB {
             return false;
         }
     }
+
+    public void deleteGame(int gameID){
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM GameChecker WHERE gameID = ?");
+            preparedStatement.setInt(1, gameID);
+            preparedStatement.executeUpdate();
+        } catch (Exception e){
+            System.out.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
 }
