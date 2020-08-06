@@ -14,10 +14,11 @@ public class InsertInDB {
 
     public void insertDecisionInDB(int gameID, String decision, int playerID){
         try{
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO GameChecker(gameID, decision, playerID) VALUES(?, ?, ?) ");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO GameChecker(gameID, decision, playerID, requested) VALUES(?, ?, ?, ?) ");
             preparedStatement.setInt(1, gameID);
             preparedStatement.setString(2, decision);
             preparedStatement.setInt(3, playerID);
+            preparedStatement.setInt(4, 0);
             preparedStatement.executeUpdate();
         } catch (Exception e){
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
@@ -91,6 +92,7 @@ public class InsertInDB {
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GameChecker SET requested = 1 WHERE gameID = ? AND playerID = ?");
             preparedStatement.setInt(1, gameID);
             preparedStatement.setInt(2, playerID);
+            preparedStatement.executeUpdate();
         } catch (Exception e){
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
