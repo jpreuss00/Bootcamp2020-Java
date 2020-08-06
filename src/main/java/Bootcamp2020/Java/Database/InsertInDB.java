@@ -85,4 +85,58 @@ public class InsertInDB {
             System.exit(0);
         }
     }
+
+    public void addRequested(int gameID, int playerID){
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GameChecker SET requested = 1 WHERE gameID = ? AND playerID = ?");
+            preparedStatement.setInt(1, gameID);
+            preparedStatement.setInt(2, playerID);
+        } catch (Exception e){
+            System.out.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
+
+    public boolean requestedAmount(int gameID){
+        try{
+            int requestChecker = 0;
+
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM GameChecker WHERE gameID = ? AND playerID = 1");
+            preparedStatement.setInt(1, gameID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                 if(resultSet.getInt("requested") == 1){
+                     requestChecker++;
+                 } else {
+                     return false;
+                 }
+            } else {
+                return false;
+            }
+
+            preparedStatement = connection.prepareStatement("SELECT * FROM GameChecker WHERE gameID = ? AND playerID = 2");
+            preparedStatement.setInt(1, gameID);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                if(resultSet.getInt("requested") == 1){
+                    requestChecker++;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+
+            if(requestChecker == 2){
+                return true;
+            }
+
+            return false;
+        }catch (Exception e){
+            System.out.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+            return false;
+        }
+    }
+
 }

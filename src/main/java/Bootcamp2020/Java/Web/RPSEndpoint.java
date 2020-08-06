@@ -63,18 +63,21 @@ public class RPSEndpoint extends AbstractHandler {
                 decisionPlayer1 = decisions[0];
                 decisionPlayer2 = decisions[1];
                 winner = rockPaperScissors.compareDecisions(decisionPlayer1, decisionPlayer2);
-                insertInDB.deleteGame(gameID);
+                if(insertInDB.requestedAmount(gameID)){
+                    insertInDB.deleteGame(gameID);
+                } else {
+                    insertInDB.addRequested(gameID, playerID);
+                }
                 response.setStatus(200);
             } else {
                 response.setStatus(400);
             }
         }
 
-        JSONObject json = new JSONObject().put("Winner", winner);
-        JSONObject decisions = new JSONObject();
-        decisions.put("Spieler 1", decisionPlayer1);
-        decisions.put("Spieler 2", decisionPlayer2);
-        json.append("Entscheidungen", decisions);
+        JSONObject json = new JSONObject();
+        json.put("Winner", winner);
+        json.put("Spieler1", decisionPlayer1);
+        json.put("Spieler2", decisionPlayer2);
         response.getWriter().print(json);
 
         baseRequest.setHandled(true);
