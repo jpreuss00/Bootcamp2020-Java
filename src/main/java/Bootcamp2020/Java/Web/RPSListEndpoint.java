@@ -57,8 +57,8 @@ public class RPSListEndpoint extends AbstractHandler {
         if(requestCheck != 0){
             if(gameManager.checkDecisionAmount(gameID)){
                 String[] decisions = gameManager.getDecisions(gameID);
-                decisionPlayer1 = decisions[1];
-                decisionPlayer2 = decisions[2];
+                decisionPlayer1 = decisions[0];
+                decisionPlayer2 = decisions[1];
                 winner = rockPaperScissors.compareDecisions(decisionPlayer1, decisionPlayer2);
                 if(!gameManager.checkForRequestedAmount(gameID)){
                     gameManager.changeRequestedState(gameID, playerID);

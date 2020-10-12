@@ -32,7 +32,7 @@ public class Webserver {
         rps.setHandler(new RPSEndpoint(rockPaperScissors, insertInDB, corsHandler));
         rpsList.setHandler((new RPSListEndpoint(rockPaperScissors, gameManager, corsHandler)));
 
-        ContextHandlerCollection contexts = new ContextHandlerCollection(rps);
+        ContextHandlerCollection contexts = new ContextHandlerCollection(rps, rpsList);
 
         String port = System.getenv("PORT");
 

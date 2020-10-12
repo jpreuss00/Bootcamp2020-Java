@@ -13,7 +13,10 @@ public class GameList {
     public boolean removeFromList(int gameID) {
         for (Game game : gameList) {
             if (game.getGameID() == gameID) {
-                return gameList.remove(game);
+                System.out.println(gameList);
+                gameList.remove(game);
+                System.out.println(gameList);
+                return true;
             }
         }
         return false;
@@ -66,7 +69,7 @@ public class GameList {
     public void changeRequestedState(int gameID, int playerID){
         for(Game game : gameList){
             if(game.getGameID() == gameID){
-                game.setRequested(false, playerID);
+                game.setRequested(true, playerID);
             }
         }
     }
