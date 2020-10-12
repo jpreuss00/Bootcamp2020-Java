@@ -5,6 +5,7 @@ package Bootcamp2020.Java;
 
 import Bootcamp2020.Java.Database.ConnectToDB;
 import Bootcamp2020.Java.Database.InsertInDB;
+import Bootcamp2020.Java.GameList.GameManager;
 import Bootcamp2020.Java.Web.CorsHandler;
 import Bootcamp2020.Java.Web.Webserver;
 
@@ -51,6 +52,8 @@ public class Main {
 
         RockPaperScissors rockPaperScissors = new RockPaperScissors();
 
-        new Webserver(rockPaperScissors, insertInDB, corsHandler).startJetty();
+        GameManager gameManager = new GameManager();
+
+        new Webserver(rockPaperScissors, insertInDB, corsHandler, gameManager).startJetty();
     }
 }

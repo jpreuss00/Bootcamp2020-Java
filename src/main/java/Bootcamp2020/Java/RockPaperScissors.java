@@ -41,4 +41,5 @@ public class RockPaperScissors {
 
         return answers[random.nextInt(3)];
     }
+
 }
